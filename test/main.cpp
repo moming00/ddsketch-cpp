@@ -17,7 +17,7 @@ int main() {
     std::normal_distribution<double> distribution(0.0, 1.0);
 
     // auto now = std::chrono::high_resolution_clock::now();
-    for (auto value = 1; value <= 5000000; ++value) {
+    for (auto value = 1; value <= 50000000; ++value) {
         sketch.add(distribution(generator));
     }
     // auto now1 = std::chrono::high_resolution_clock::now();
@@ -40,8 +40,8 @@ int main() {
     std::chrono::microseconds totalDuration;
     for (int i = 0; i < 10000; i++) {
         ddsketch::DDSketch anotherSketch(kDesiredRelativeAccuracy);
-        for (auto value = 1; value <= 5000000; ++value) {
-            anotherSketch.add(distribution(generator));
+        for (auto value = 1; value <= 50000000; ++value) {
+            anotherSketch.add(distribution(generator) + i);
         }
 
         auto now = std::chrono::high_resolution_clock::now();
@@ -49,20 +49,21 @@ int main() {
 
         auto now1 = std::chrono::high_resolution_clock::now();
         auto psketch = sketch.to_proto();
-        std::string output = psketch.SerializeAsString();
+        auto output = psketch.SerializeAsString();
 
         auto now2 = std::chrono::high_resolution_clock::now();
         ::DDSketch tsketch;
         tsketch.ParseFromString(output);
         auto s = ddsketch::from_proto(&tsketch);
+        auto now3 = std::chrono::high_resolution_clock::now();
 
-        totalDuration += std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now);
+        totalDuration += std::chrono::duration_cast<std::chrono::microseconds>(now3 - now);
         std::cout
             << "    sketch count: " << i
             << "    merge time: " << std::chrono::duration_cast<std::chrono::microseconds>(now1 - now).count() << "µs"
             << "    serialize sketch: " << std::chrono::duration_cast<std::chrono::microseconds>(now2 - now1).count() << "µs"
-            << "    deserialize sketch: " << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now2).count() << "µs"
-            << "    proto length: " << output.length() << std::endl;
+            << "    deserialize sketch: " << std::chrono::duration_cast<std::chrono::microseconds>(now3 - now2).count() << "µs"
+            << "    proto size: " << output.length() << "B" << std::endl;
     }
     std::cout << "Total time took to merge sketch: " << totalDuration.count() << "µs\n";
 }
