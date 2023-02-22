@@ -22,6 +22,7 @@ This project was inspired by https://github.com/tudor1805/sketches-cpp, with add
 This project was inspired by https://github.com/tudor1805/sketches-cpp, with additional protobuf feature implemented.
 
 Benchamrk test result based on the test script on ./test/main.cpp:
+```text
 sketch count: 0   merge time: 24µs  serialize sketch: 74µs  deserialize sketch: 105µs   proto size: 15977B
 sketch count: 1   merge time: 10µs  serialize sketch: 24µs  deserialize sketch: 64µs    proto size: 16041B
 sketch count: 2   merge time: 10µs  serialize sketch: 35µs  deserialize sketch: 67µs    proto size: 16089B
@@ -60,3 +61,4 @@ sketch count: 34  merge time: 0µs   serialize sketch: 27µs  deserialize sketch
 sketch count: 35  merge time: 4µs   serialize sketch: 25µs  deserialize sketch: 62µs    proto size: 16761B
 sketch count: 36  merge time: 2µs   serialize sketch: 43µs  deserialize sketch: 118µs   proto size: 16777B
 sketch count: 37  merge time: 1µs   serialize sketch: 39µs  deserialize sketch: 106µs   proto size: 16785B
+```
