@@ -19,8 +19,6 @@ DDSketch implementations are also available in:
 
 This project was inspired by https://github.com/tudor1805/sketches-cpp, with additional protobuf feature implemented.
 
-This project was inspired by https://github.com/tudor1805/sketches-cpp, with additional protobuf feature implemented.
-
 Benchamrk test result based on the test script on ./test/main.cpp:
 ```text
 sketch count: 0   merge time: 24µs  serialize sketch: 74µs  deserialize sketch: 105µs   proto size: 15977B
